@@ -4,13 +4,13 @@ import (
 	"bytes"
 	"context"
 	"crypto/tls"
-        "encoding/json"
+	"encoding/json"
 	"fmt"
 	"io"
 	"math"
 	"math/rand"
 	"net"
-        "net/http"
+	"net/http"
 	"net/netip"
 	"sync"
 
@@ -162,8 +162,8 @@ type ServerConfiguration struct {
 
 	SessId int
 
-	DisableBGPSec	bool
-	EnableNODELAY	bool
+	DisableBGPSec bool
+	EnableNODELAY bool
 
 	RefreshInterval uint32
 	RetryInterval   uint32
@@ -174,10 +174,10 @@ type ServerConfiguration struct {
 }
 
 func NewServer(configuration ServerConfiguration, handler RTRServerEventHandler, simpleHandler RTREventHandler) *Server {
-	sessids := make([]uint16, 0, int(configuration.ProtocolVersion) + 1)
+	sessids := make([]uint16, 0, int(configuration.ProtocolVersion)+1)
 	s := GenerateSessionId()
 	for i := 0; i <= int(configuration.ProtocolVersion); i++ {
-		sessids = append(sessids, s + uint16(100 * i))
+		sessids = append(sessids, s+uint16(100*i))
 	}
 
 	refreshInterval := uint32(3600)
@@ -194,26 +194,26 @@ func NewServer(configuration ServerConfiguration, handler RTRServerEventHandler,
 	}
 
 	return &Server{
-		sdlock:       &sync.RWMutex{},
-		sdListDiff:   make([][]SendableData, 0),
-		sdCurrent:    make([]SendableData, 0),
-		keepDiff:     configuration.KeepDifference,
+		sdlock:     &sync.RWMutex{},
+		sdListDiff: make([][]SendableData, 0),
+		sdCurrent:  make([]SendableData, 0),
+		keepDiff:   configuration.KeepDifference,
 
-		clientlock:     &sync.RWMutex{},
-		clients:        make([]*Client, 0),
-		sessId:         sessids,
-		maxconn:        configuration.MaxConn,
-		baseVersion:    configuration.ProtocolVersion,
+		clientlock:  &sync.RWMutex{},
+		clients:     make([]*Client, 0),
+		sessId:      sessids,
+		maxconn:     configuration.MaxConn,
+		baseVersion: configuration.ProtocolVersion,
 
 		enforceVersion: configuration.EnforceVersion,
-		disableBGPSec:	configuration.DisableBGPSec,
+		disableBGPSec:  configuration.DisableBGPSec,
 
 		pduRefreshInterval: refreshInterval,
 		pduRetryInterval:   retryInterval,
 		pduExpireInterval:  expireInterval,
 
-		handler:        handler,
-		simpleHandler:  simpleHandler,
+		handler:       handler,
+		simpleHandler: simpleHandler,
 
 		log:        configuration.Log,
 		logverbose: configuration.LogVerbose,
@@ -322,7 +322,7 @@ func (s *Server) getSDsSerialDiff(serial uint32) ([]SendableData, bool) {
 		return nil, false
 	}
 
-	sd := s.sdListDiff[len(s.sdListDiff) - diff]
+	sd := s.sdListDiff[len(s.sdListDiff)-diff]
 	return sd, true
 }
 
@@ -374,7 +374,7 @@ func (s *Server) AddData(new []SendableData) bool {
 
 func (s *Server) AddSDsDiff(diff []SendableData) {
 	s.sdlock.RLock()
-	nextDiff := make([][]SendableData, len(s.sdListDiff) + 1)
+	nextDiff := make([][]SendableData, len(s.sdListDiff)+1)
 	for i, prevSDs := range s.sdListDiff {
 		nextDiff[i] = ApplyDiff(diff, prevSDs)
 	}
@@ -387,7 +387,7 @@ func (s *Server) AddSDsDiff(diff []SendableData) {
 
 	nextDiff = append(nextDiff, diff)
 	if s.keepDiff > 0 && len(nextDiff) > s.keepDiff {
-		nextDiff = nextDiff[len(nextDiff) - s.keepDiff:]
+		nextDiff = nextDiff[len(nextDiff)-s.keepDiff:]
 	}
 
 	s.sdListDiff = nextDiff
@@ -824,7 +824,6 @@ func (c *Client) readLoop(ctx context.Context) error {
 		}
 	}
 }
-
 
 func (c *Client) Start() {
 	defer c.tcpconn.Close()

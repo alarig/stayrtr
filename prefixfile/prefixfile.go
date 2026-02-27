@@ -9,18 +9,18 @@ import (
 )
 
 type RPKIList struct {
-	Metadata   MetaData                    `json:"metadata,omitempty"`
-	ROA        []VRPJson                   `json:"roas"` // for historical reasons this is called 'roas', but should've been called vrps
-	BgpSecKeys []BgpSecKeyJson             `json:"bgpsec_keys,omitempty"`
+	Metadata   MetaData        `json:"metadata,omitempty"`
+	ROA        []VRPJson       `json:"roas"` // for historical reasons this is called 'roas', but should've been called vrps
+	BgpSecKeys []BgpSecKeyJson `json:"bgpsec_keys,omitempty"`
 }
 
 type MetaData struct {
-	Counts        int    `json:"vrps"`
-	CountBgpSecKeys int  `json:"bgpsec_pubkeys"`
-	Buildtime     string `json:"buildtime,omitempty"`
-	GeneratedUnix *int64 `json:"generated,omitempty"`
-	SessionID        int `json:"sessionid,omitempty"`
-	Serial           int `json:"serial"`
+	Counts          int    `json:"vrps"`
+	CountBgpSecKeys int    `json:"bgpsec_pubkeys"`
+	Buildtime       string `json:"buildtime,omitempty"`
+	GeneratedUnix   *int64 `json:"generated,omitempty"`
+	SessionID       int    `json:"sessionid,omitempty"`
+	Serial          int    `json:"serial"`
 }
 
 type VRPJson struct {
@@ -32,9 +32,9 @@ type VRPJson struct {
 }
 
 type BgpSecKeyJson struct {
-	Asn     uint32  `json:"asn"`
-	Expires *int64  `json:"expires,omitempty"`
-	Ta      string  `json:"ta,omitempty"`
+	Asn     uint32 `json:"asn"`
+	Expires *int64 `json:"expires,omitempty"`
+	Ta      string `json:"ta,omitempty"`
 
 	// Base64 encoded, but encoding/json handles this for us
 	// Example: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE4FxJr0n2bux1uX1Evl+QWwZYvIadPjLuFX2mxqKuAGUhKnr7VLLDgrE++l9p5eH2kWTNVAN22FUU3db/RKpE2w==

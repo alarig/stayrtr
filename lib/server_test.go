@@ -14,9 +14,9 @@ import (
 func GenerateVrps(size uint32, offset uint32) []SendableData {
 	vrps := make([]SendableData, size)
 	for i := uint32(0); i < size; i++ {
-		ipFinal := i+offset
+		ipFinal := i + offset
 		vrps[i] = &VRP{
-			Prefix: netip.MustParsePrefix(fmt.Sprintf("fd00::%04x:%04x/128", ipFinal >> 16, ipFinal & 0xffff)),
+			Prefix: netip.MustParsePrefix(fmt.Sprintf("fd00::%04x:%04x/128", ipFinal>>16, ipFinal&0xffff)),
 			MaxLen: 128,
 			ASN:    64496,
 		}
