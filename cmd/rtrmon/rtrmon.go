@@ -364,9 +364,9 @@ func (c *Client) Start(id int, ch chan int) {
 
 // Build the new vrpMap
 // The result:
-//   * contains all the VRPs in newVRPs
-//   * keeps the firstSeen value for VRPs already in the old map
-//   * keeps elements around for GracePeriod after they are not in the input.
+//   - contains all the VRPs in newVRPs
+//   - keeps the firstSeen value for VRPs already in the old map
+//   - keeps elements around for GracePeriod after they are not in the input.
 func BuildNewVrpMap(log *log.Entry, currentVrps VRPMap, pfxFile *prefixfile.RPKIList, now time.Time) (VRPMap, int) {
 	var newVrps = pfxFile.ROA
 	tCurrentUpdate := now.Unix()

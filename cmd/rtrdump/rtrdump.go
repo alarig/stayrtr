@@ -167,7 +167,7 @@ func main() {
 	client := &Client{
 		Data: prefixfile.RPKIList{
 			Metadata: prefixfile.MetaData{},
-			ROA:     make([]prefixfile.VRPJson, 0),
+			ROA:      make([]prefixfile.VRPJson, 0),
 		},
 		InitSerial: *InitSerial,
 		Serial:     uint32(*Serial),

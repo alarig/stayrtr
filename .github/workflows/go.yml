@@ -24,6 +24,18 @@ jobs:
       with:
         go-version-file: 'go.mod'
 
+    - name: Check formatting
+      run: |
+        # gofmt -l recursively checks all .go files when given a directory
+        unformatted=$(gofmt -l .)
+        if [ -n "$unformatted" ]; then
+          echo "The following files are not formatted correctly:"
+          echo "$unformatted"
+          echo ""
+          echo "Please run 'go fmt ./...' to fix formatting"
+          exit 1
+        fi
+
     - id: govulncheck
       uses: golang/govulncheck-action@v1
       with:

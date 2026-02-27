@@ -107,7 +107,7 @@ func (s *SlurmValidationOutputFilters) FilterOnVRPs(vrps []VRPJson) (added, remo
 			if match && fPrefix.IsValid() && rPrefix.IsValid() {
 
 				if !(fPrefix.Overlaps(rPrefix) &&
-				    fPrefix.Bits() <= rPrefix.Bits()) {
+					fPrefix.Bits() <= rPrefix.Bits()) {
 					match = false
 				}
 			}
